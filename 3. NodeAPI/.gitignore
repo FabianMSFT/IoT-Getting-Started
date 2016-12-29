@@ -1,3 +1,5 @@
 *.config
 /packages
 *.env
+/node_modules
+
