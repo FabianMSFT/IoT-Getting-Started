@@ -2,7 +2,7 @@
   "name": "simdevice",
   "version": "1.0.0",
   "description": "",
-  "main": "managedDevice.js",
+  "main": "app.js",
   "dependencies": {
     "azure-iot-device": "^1.1.2",
     "azure-iot-device-amqp": "^1.1.2",

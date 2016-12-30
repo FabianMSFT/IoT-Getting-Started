@@ -5,6 +5,12 @@ var Message = require('azure-iot-device').Message;
 // IoT Stuff
 var iothub = require('azure-iothub');
 var connectionString = process.env.IOT_CONNECTION + ";" + process.env.DEVICEID + ";" + process.env.DEVICEKEY;
+
+if (process.env.IOT_CONNECTION == undefined || process.env.DEVICEID == undefined || process.env.DEVICEKEY == undefined) {
+    console.log("Please set the IOT_CONNECTION, DEVICEID and/or DEVICE KEY Environment variables");
+    process.exit();
+}; 
+
 var client = clientFromConnectionString(connectionString);
 
 function printResultFor(op) {
@@ -15,7 +21,7 @@ function printResultFor(op) {
 }
 
 var connectCallback = function (err) {
-   
+
     if (err) {
         console.log('Could not connect: ' + err);
     } else {
