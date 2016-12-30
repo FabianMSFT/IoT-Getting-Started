@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-url = 'http://localhost:8081/';
+var url = 'http://localhost:8081/';
 
 // testing the api
 function testNodeAPI() {
@@ -29,11 +29,11 @@ function getNameAge (data) {
             console.log(parsedRes.name + "=" + parsedRes.age);
         })
 };
-
+ 
 //testNodeAPI();
 rl.question('Please give a name: ', (answer) => {
   console.log(`Thank you for your Name : ${answer}`);
-  formData = JSON.parse('{ "name": "' + answer + '", "age": 24 }');
+  formData = JSON.parse('{ "name": "' + answer + '", "age": 27 }');
   getNameAge(formData);
   rl.close();
 });

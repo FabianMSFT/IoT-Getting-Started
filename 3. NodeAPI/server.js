@@ -16,11 +16,12 @@ app.get('/', function (req, res) {
 
 app.post('/', function (req, res) {
   console.log(req.body.name + "-" + req.body.age);
-  jsonData = JSON.parse('{ "name": "' + req.body.name + '", "age":' + req.body.age + '}');
- 
-  res.contentType('application/json');
-  res.send(jsonData);
 
+  data = {
+    "name": req.body.name,
+    "age": req.body.age
+  };
+  res.json(data);
 });
 
 // server
