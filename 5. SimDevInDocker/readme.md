@@ -10,3 +10,6 @@ docker ps
 docker logs <container id>
 
 docker stop <NAMES>
+
+# Private Repo
+https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli
