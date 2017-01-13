@@ -1,30 +1,41 @@
-'use strict';
+'use strict'
+// make sure that openssl is in path or you run this in the openssl directory
 
-var iothub = require('azure-iothub');
+var pem = require('pem');
+var fs = require('fs');
 
-var connectionString = 'stringy';
-var registry = iothub.Registry.fromConnectionString(connectionString);
-var device = {
-  deviceId: 'myFirstnodeNodeDevice',
-  status: 'enabled',
-  authentication: {
-    x509Thumbprint: {
-      primaryThumbprint: "89:AE:A1:05:F4:AA:6A:DC:D3:71:36:D3:0B:E2:DB:EE:52:35:A5:1F",
-      secondaryThumbprint: ""
-    }
-  }
+var certFile = 'test-cert.pem';
+var keyFile = 'test-key.pem';
+
+var thumbprint = null;
+var deviceInfo;
+
+var certOptions = {
+  selfSigned: true,
+  days: 365
 };
 
-registry.create(device, function (err) {
-  if(err) {
-    console.error('Could not create device: ' + err.message);
+pem.createCertificate(certOptions, function (err, result) {
+  if (err) {
+    console.log ('You must have OpenSSL installed in your path for iothub-explorer to be able to generate x509 certificates');
   } else {
-    registry.get(device.deviceId, function(err, deviceInfo) {
-      if(err) {
-        console.error('Could not get device: ' + err.message);
-      } else {
-        console.log(JSON.stringify(deviceInfo));
-      }
+    fs.writeFileSync(certFile, result.certificate);
+    fs.writeFileSync(keyFile, result.clientKey);
+
+    console.log('Certificate File: ' + certFile);
+    console.log('Key File: ' + keyFile);
+    
+    pem.getFingerprint(result.certificate, function (err, result) {
+      //need to replace all :
+      thumbprint = result.fingerprint.replace(/:/g, '');
+      
+      deviceInfo.authentication = {
+        x509Thumbprint: {
+          primaryThumbprint: thumbprint
+        }
+      };
     });
   }
 });
+
+console.log(thumbprint);
