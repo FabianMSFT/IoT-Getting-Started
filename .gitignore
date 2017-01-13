@@ -3,3 +3,6 @@
 *.env
 */node_modules
 */.iot.env
+*/*.key
+*/*.cert
+*/*.pem
